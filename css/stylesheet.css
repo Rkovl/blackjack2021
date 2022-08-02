@@ -1,0 +1,14 @@
+.table{
+    background: #A49D9D;
+    background: -moz-linear-gradient(-45deg, #A49D9D 0%, #144E75 100%);
+    background: -webkit-linear-gradient(-45deg, #A49D9D 0%, #144E75 100%);
+    background: linear-gradient(135deg, #A49D9D 0%, #144E75 100%);
+    height: 90vh;
+    border-radius: 15%;
+    margin:50px;
+    padding: 100px;
+    box-sizing: border-box;
+}
+body{
+    margin: 0px;
+}

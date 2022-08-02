@@ -4,7 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Blackjack</title>
-  <script src="scripts/main.js"></script>
+  <link rel="stylesheet" href="extras/HereIsOneIPreparedEarlier.css">
+  <link rel="shortcut icon" href="~/favicon.ico">
+   
 </head>
 <body>
   <div class="message-box" id="messages"></div>
@@ -20,16 +22,45 @@
     <div class="player">
       <label class="player-name">Player: 
         <span id="player-points" class="points"></span>
+        &emsp; Money:
+        <span id="player-money" class="money">10</span>
       </label>
       <div id="player-hand" class="hand">
+        
         <!-- Player Hand -->
       </div>
     </div>
+    
     <div class="buttons">
       <button id="deal-button" type="button">Deal</button>
       <button id="hit-button" type="button">Hit</button>
       <button id="stand-button" type="button">Stand</button>
     </div>
+    <div class="ai">
+      <label class="ai-name">Stacy AI:
+        <span id="ai1-points" class="points"></span>
+        &emsp; Money:
+        <span id="ai1-money" class="money">10</span>
+      </label>
+      <div id="ai1-hand" class="hand">
+        
+        <!-- ai Hand -->
+      </div>
+    </div>
+    <div class="ai">
+      <label class="ai-name">Junior AI: 
+        <span id="ai2-points" class="points"></span>
+        &emsp; Money:
+        <span id="ai2-money" class="money">10</span>
+      </label>
+      <div id="ai2-hand" class="hand">
+        
+        <!-- ai Hand -->
+      </div>
+    </div>
   </div>
+
+  <script src="scripts/main.js"></script>
+  
 </body>
 </html>
