@@ -19,7 +19,7 @@ class Cards{
     }
 };
 
-
+//used in creating the deck
 const funSuit = (type) =>{
     switch(type){
         case 1:
@@ -33,8 +33,13 @@ const funSuit = (type) =>{
     }
 };
 const funDeal = (who)=>{
+    //I do not this need to be a for loop, or a loop at all. it may have been a left over from some even older code
     for(let A=0; A<1;A++){
+        // hold is getting random number based on how many cards are in the deck
+        //it then grabs that card and pushes it
+        //the function the removes that card from the deck
         let hold = Math.floor(Math.random()*arrDeck.length)
+        //the line directly below is unnecessary
         arrDeck[hold]
         who.push(arrDeck[hold])
         arrDeck.splice(hold, 1)
@@ -42,6 +47,8 @@ const funDeal = (who)=>{
     }
 };
 const funScore = (who)=>{
+    //calculates the score from scratch every time from the entities array by looping through it
+    //this was done the recalculate the score incase of aces which are both a score of 1 or 11
     let score = 0
     let ace = 0
     
@@ -51,6 +58,8 @@ const funScore = (who)=>{
             ace += 1
         }
     }
+    //if the score is over 21 (so the entity would bust) and it has an ace in hand, change the aces score to 1
+    //I could have overwritten the aces value in the entities array so that once an ace needed to turn into a 1 it would stay that way and it would need to go through this section of code so often
     if (score>21 && ace>0){
         for(let B = 0; B<ace;B++){
             if (score>21 && ace>0){
@@ -64,7 +73,12 @@ const funScore = (who)=>{
     }
 
 }
+//funShow intakes the array of the entity, the about of cards they receive, there html element hand and html element score 
 const funShow = (whoArr,cardAmount,whoHand,whoScore)=>{
+    //loops for the amount of cards being added
+    //adds card data to entities array
+    //grabs the card data from that array and add a image to the entities hand element
+    //then calculates the score and overwrites the old element
     for(let A = 0;A<cardAmount;A++){
         funDeal(whoArr)
         whoHand.innerHTML += `<img src="${whoArr[whoArr.length-1].img}">` 
@@ -74,12 +88,7 @@ const funShow = (whoArr,cardAmount,whoHand,whoScore)=>{
 }
 const funCheck = (p1,p2,p3) =>{
     let A = 0
-    //console.log(p1);
-    //console.log(p2);
-    //console.log(p3);
-    //console.log(alivePlayer);
-    //console.log(aliveAI1);
-    //console.log(aliveAI2);
+
     while(A<3){
         if (p1>21 && alivePlayer == true){
             alivePlayer = false
@@ -167,7 +176,8 @@ const funReset = ()=>{
     arrAI2 = [];
 }
 
-
+// automates adding and creating all the cards and then adding them to a deck
+// it is not a function so the amount of decks/cards can not be altered
 for(let num=2; num<=14;num++){
     for(let suit=1; suit<=4;suit++){
         if(num<=10){
@@ -189,7 +199,7 @@ for(let num=2; num<=14;num++){
 
 }
 
-
+// grabbing all the changing html elements from index.html
 let allButtons = document.querySelector('.buttons')
 let allButtonsSin = document.querySelectorAll('button')
 let dealerHand = document.querySelector('#dealer-hand')
@@ -206,34 +216,30 @@ let money = document.querySelectorAll('.money')
 
 
 let dealPress = false
-
+// disables button 1 and 2 which are the "hit" and "stand" buttons
 allButtonsSin[1].disabled = true
 allButtonsSin[2].disabled = true
 
 allButtons.addEventListener('click', e=>{
+    //what happens when you click on the deal button
     if (e.target.innerText == 'Deal'){
+        //fully checking whether the deal button is disabled (not sure if this needs to exist)
         if(dealPress == false){
+            // deals two cards to every player with the funShow function
             funShow(arrDealer,2,dealerHand,dealerScore)
             funShow(arrPlayer,2,playerHand,playerScore)
             funShow(arrAI1,2,ai1Hand,ai1Score)
             funShow(arrAI2,2,ai2Hand,ai2Score)
-
+            // disables the deal button and then enables the hit and stand buttons
             dealPress = true
             e.target.disabled = true
             allButtonsSin[2].disabled = false
             allButtonsSin[1].disabled = false
         }
-        else{
-
-        }
-
     }
     else if (e.target.innerText == 'Hit'){
         funShow(arrPlayer,1,playerHand,playerScore)
         funCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
-        //console.log(alivePlayer);
-        //console.log(aliveAI1);
-        //console.log(aliveAI2);
 
         if(aliveAI1 == true){
             if (funScore(arrAI1) <= funScore(arrDealer) && funScore(arrAI1) < 16){
