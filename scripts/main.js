@@ -19,6 +19,18 @@ class Cards{
     }
 };
 
+const on = (string)=> {
+    document.querySelector("#overlay").style.display = "block";
+    document.querySelector("#olContent").innerHTML = string
+
+  }
+  
+const off=()=> {
+    funReset()
+    document.querySelector("#overlay").style.display = "none";
+    olContent.innerHTML = ''
+  }
+
 //used in creating the deck
 const funSuit = (type) =>{
     switch(type){
@@ -107,12 +119,7 @@ const funCheck = (p1,p2,p3) =>{
 }
 const funLCheck = (p1,p2,p3) =>{
     let A = 0
-    //console.log(p1);
-    //console.log(p2);
-    //console.log(p3);
-    //console.log(alivePlayer);
-    //console.log(aliveAI1);
-    //console.log(aliveAI2);
+
     while(A<3){
         if ((p1>21 && alivePlayer == true)){
             alivePlayer = false
@@ -253,8 +260,7 @@ allButtons.addEventListener('click', e=>{
         }
         if (alivePlayer == false){
             funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
-            alert('you suck')
-            funReset()
+            on("Lost!!")
         }
     }
     else if (e.target.innerText == 'Stand'){
@@ -272,50 +278,24 @@ allButtons.addEventListener('click', e=>{
 
         while (funScore(arrPlayer)>=funScore(arrDealer)){
             if (funScore(arrPlayer)==funScore(arrDealer)&&funScore(arrDealer)> 16){
-                alert('you tie (not in the fashion sense)')
+                on("Tie!!")
                 funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
-                funReset()
                 break;
             }
 
             funShow(arrDealer,1,dealerHand,dealerScore) 
 
             if (funScore(arrDealer)>21){
-                alert('you win!')
+                on("Win!!")
                 funCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
-                funReset()
                 break;
             }
             
         }
-        console.log('object');
-        console.log(alivePlayer)
-        console.log(aliveAI1);
-        console.log(aliveAI2);
-        // if (funScore(arrPlayer)<funScore(arrDealer) && alivePlayer == true && funScore(arrDealer)>21){
-        //     console.log('1');
-        //     alivePlayer = false
-        //     money[0].innerText = parseInt(money[0].innerText)-1
-        // }
-        // if (funScore(arrAI1)<funScore(arrDealer) && aliveAI1 == true && funScore(arrDealer)>21){
-        //     console.log('2');
-        //     aliveAI1 = false
-        //     money[1].innerText = parseInt(money[1].innerText && funScore(arrDealer)>21)-1
-        // }
-        // if (funScore(arrAI2)<funScore(arrDealer) && aliveAI2 == true){
-        //     console.log('3');
-        //     aliveAI2 = false
-        //     money[2].innerText = parseInt(money[2].innerText)-1
-        // }
+
         funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
         if(funScore(arrPlayer)<funScore(arrDealer)){
-            alert('you a loser')
-            funReset()
+            on("Lost!!")
         }
     }
-
-    else{
-
-    }
-
 })
