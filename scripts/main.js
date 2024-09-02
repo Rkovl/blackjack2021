@@ -99,54 +99,37 @@ const funShow = (whoArr,cardAmount,whoHand,whoScore)=>{
     
 }
 const funCheck = (p1,p2,p3) =>{
-    let A = 0
-
-    while(A<3){
-        if (p1>21 && alivePlayer == true){
-            alivePlayer = false
-            money[0].innerText = parseInt(money[0].innerText)-1
-        }
-        else if (p2>21 && aliveAI1 == true){
-            aliveAI1 = false
-            money[1].innerText = parseInt(money[1].innerText)-1
-        }
-        else if (p3>21 && aliveAI2 == true){
-            aliveAI2 = false
-            money[2].innerText = parseInt(money[2].innerText)-1
-        }
-        A += 1
+    if (p1>21 && alivePlayer == true){
+        alivePlayer = false
+        money[0].innerText = parseInt(money[0].innerText)-1
+    }
+    if (p2>21 && aliveAI1 == true){
+        aliveAI1 = false
+        money[1].innerText = parseInt(money[1].innerText)-1
+    }
+    if (p3>21 && aliveAI2 == true){
+        aliveAI2 = false
+        money[2].innerText = parseInt(money[2].innerText)-1
     }
 }
 const funLCheck = (p1,p2,p3) =>{
-    let A = 0
-
-    while(A<3){
-        if ((p1>21 && alivePlayer == true)){
+    if (alivePlayer == true){
+        if (p1 > 21 || p1 < funScore(arrDealer) && funScore(arrDealer) <= 21){
             alivePlayer = false
             money[0].innerText = parseInt(money[0].innerText)-1
         }
-        else if ((p2>21 && aliveAI1 == true)){
+    }
+    if (aliveAI1 == true) {
+        if(p2 > 21 || p2 < funScore(arrDealer) && funScore(arrDealer) <= 21 ){
             aliveAI1 = false
             money[1].innerText = parseInt(money[1].innerText)-1
         }
-        else if ((p3>21 && aliveAI2 == true)){
+    }
+    if (aliveAI2 == true){
+        if(p3 > 21 || p3 < funScore(arrDealer) && funScore(arrDealer) <= 21 ){
             aliveAI2 = false
             money[2].innerText = parseInt(money[2].innerText)-1
         }
-        
-        if(p1<funScore(arrDealer)&& alivePlayer == true){
-            alivePlayer = false
-            money[0].innerText = parseInt(money[0].innerText)-1 
-        }
-        else if (p2<funScore(arrDealer)&&aliveAI1 == true){
-            aliveAI1 = false
-            money[1].innerText = parseInt(money[1].innerText)-1
-        }
-        else if (p3<funScore(arrDealer)&&aliveAI2 == true){
-            aliveAI2 = false
-            money[2].innerText = parseInt(money[2].innerText)-1
-        }
-        A += 1
     }
 }
 const funReset = ()=>{
@@ -160,19 +143,14 @@ const funReset = ()=>{
     if(aliveAI2 == true){
         money[2].innerText = parseInt(money[2].innerText)+1
     }
-    //console.log('test');
     alivePlayer = true
     aliveAI1 = true
     aliveAI2 = true
     arrDeck = arrDeck.concat(arrPlayer,arrAI1,arrAI2)
-    //console.log('test2');
     for(let A = 0; A<hands.length;A++){
-        //console.log(hands[A]);
-        //console.log(points[A]);
         hands[A].innerHTML = ""
         points[A].innerText = ''
     }
-    //console.log('test3');
     allButtonsSin[0].disabled = false
     allButtonsSin[1].disabled = true
     allButtonsSin[2].disabled = true
@@ -267,17 +245,17 @@ allButtons.addEventListener('click', e=>{
 
         if(funScore(arrAI1) < funScore(arrDealer) && funScore(arrDealer)<=21){
             funShow(arrAI1,1,ai1Hand,ai1Score)
-            //console.log('object');
+
         }
         if(funScore(arrAI2) < funScore(arrDealer) && funScore(arrDealer)<=21){
             funShow(arrAI2,1,ai2Hand,ai2Score)
-            //console.log('object');
+
         }
         
         funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
 
-        while (funScore(arrPlayer)>=funScore(arrDealer)){
-            if (funScore(arrPlayer)==funScore(arrDealer)&&funScore(arrDealer)> 16){
+        while (funScore(arrPlayer)>=funScore(arrDealer) && funScore(arrDealer)<=16){
+            if (funScore(arrPlayer)==funScore(arrDealer)){
                 on("Tie!!")
                 funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
                 break;
@@ -294,8 +272,14 @@ allButtons.addEventListener('click', e=>{
         }
 
         funLCheck(funScore(arrPlayer),funScore(arrAI1),funScore(arrAI2))
-        if(funScore(arrPlayer)<funScore(arrDealer)){
+        if(!alivePlayer){
             on("Lost!!")
+        }
+        else if (funScore(arrPlayer)==funScore(arrDealer)){
+            on("Tie!!")
+        }
+        else{
+            on("Win!!")
         }
     }
 })
